@@ -1,0 +1,1097 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Feliz Cumpleaños Gabriel 🎆</title>
+
+
+<style>
+
+/* =====================================================
+   CONFIGURACIÓN GENERAL
+===================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html,
+body{
+
+    width:100%;
+    height:100%;
+
+    overflow:hidden;
+
+}
+
+body{
+
+    background:
+        radial-gradient(
+            circle at 50% 100%,
+            #172554 0%,
+            #0f172a 35%,
+            #020617 75%,
+            #000000 100%
+        );
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    position:relative;
+
+}
+
+
+/* =====================================================
+   CANVAS
+===================================================== */
+
+canvas{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+}
+
+
+/* =====================================================
+   ESTRELLAS
+===================================================== */
+
+.estrellas{
+
+    position:absolute;
+
+    inset:0;
+
+    pointer-events:none;
+
+}
+
+.estrella{
+
+    position:absolute;
+
+    width:2px;
+    height:2px;
+
+    background:white;
+
+    border-radius:50%;
+
+    box-shadow:
+        0 0 7px white;
+
+    opacity:0;
+
+    animation:
+        aparecerEstrella
+        2s
+        infinite
+        alternate;
+
+}
+
+@keyframes aparecerEstrella{
+
+    from{
+        opacity:.2;
+    }
+
+    to{
+        opacity:1;
+    }
+
+}
+
+
+/* =====================================================
+   TEXTO PRINCIPAL
+===================================================== */
+
+.mensaje{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width:100%;
+
+    text-align:center;
+
+    z-index:10;
+
+    pointer-events:none;
+
+    opacity:0;
+
+}
+
+
+/* FELIZ CUMPLEAÑOS */
+
+.feliz{
+
+    font-size:
+        clamp(
+            28px,
+            6vw,
+            80px
+        );
+
+    font-weight:900;
+
+    letter-spacing:4px;
+
+    color:white;
+
+    text-shadow:
+
+        0 0 5px white,
+        0 0 15px #ffd700,
+        0 0 30px #ffae00,
+        0 0 50px #ff6500;
+
+}
+
+
+/* GABRIEL */
+
+.nombre{
+
+    margin-top:15px;
+
+    font-size:
+        clamp(
+            45px,
+            10vw,
+            125px
+        );
+
+    font-weight:900;
+
+    letter-spacing:8px;
+
+    color:#ffd700;
+
+    text-shadow:
+
+        0 0 5px white,
+        0 0 15px #ffd700,
+        0 0 30px #ffb300,
+        0 0 60px #ff6500,
+        0 0 100px #ff3300;
+
+}
+
+
+/* =====================================================
+   ANIMACIÓN DEL MENSAJE
+===================================================== */
+
+.mostrarMensaje{
+
+    animation:
+
+        aparecerMensaje
+        3s
+        ease
+        forwards;
+
+}
+
+
+@keyframes aparecerMensaje{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.3);
+
+        filter:
+            blur(20px);
+
+    }
+
+    50%{
+
+        opacity:.5;
+
+    }
+
+    100%{
+
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+
+        filter:
+            blur(0);
+
+    }
+
+}
+
+
+/* =====================================================
+   BRILLO DEL NOMBRE
+===================================================== */
+
+.brillo{
+
+    animation:
+
+        brilloNombre
+        1.8s
+        infinite
+        alternate;
+
+}
+
+
+@keyframes brilloNombre{
+
+    from{
+
+        text-shadow:
+
+            0 0 5px white,
+            0 0 15px #ffd700,
+            0 0 30px #ffb300;
+
+    }
+
+    to{
+
+        text-shadow:
+
+            0 0 10px white,
+            0 0 25px #ffd700,
+            0 0 50px #ffae00,
+            0 0 90px #ff4500;
+
+    }
+
+}
+
+
+/* =====================================================
+   MENSAJE INICIAL
+===================================================== */
+
+.intro{
+
+    position:absolute;
+
+    left:50%;
+    top:75%;
+
+    transform:
+        translateX(-50%);
+
+    color:white;
+
+    font-size:
+        clamp(
+            12px,
+            2vw,
+            18px
+        );
+
+    letter-spacing:3px;
+
+    opacity:.7;
+
+    z-index:20;
+
+    text-align:center;
+
+    transition:
+        opacity 1s ease;
+
+}
+
+.ocultarIntro{
+
+    opacity:0;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:600px){
+
+    .feliz{
+
+        letter-spacing:2px;
+
+    }
+
+    .nombre{
+
+        letter-spacing:4px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     CANVAS DE FUEGOS ARTIFICIALES
+===================================================== -->
+
+<canvas id="canvas"></canvas>
+
+
+<!-- =====================================================
+     ESTRELLAS
+===================================================== -->
+
+<div
+    class="estrellas"
+    id="estrellas">
+</div>
+
+
+<!-- =====================================================
+     TEXTO INICIAL
+===================================================== -->
+
+<div
+    class="intro"
+    id="intro">
+
+    ✨ Espera la sorpresa... ✨
+
+</div>
+
+
+<!-- =====================================================
+     MENSAJE DE CUMPLEAÑOS
+===================================================== -->
+
+<div
+    class="mensaje"
+    id="mensaje">
+
+    <div class="feliz">
+
+        FELIZ CUMPLEAÑOS
+
+    </div>
+
+
+    <div
+        class="nombre brillo">
+
+        GABRIEL
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   CANVAS
+===================================================== */
+
+const canvas =
+    document.getElementById("canvas");
+
+const ctx =
+    canvas.getContext("2d");
+
+
+let ancho;
+let alto;
+
+
+function ajustarCanvas(){
+
+    ancho =
+        canvas.width =
+        window.innerWidth;
+
+    alto =
+        canvas.height =
+        window.innerHeight;
+
+}
+
+
+ajustarCanvas();
+
+
+window.addEventListener(
+    "resize",
+    ajustarCanvas
+);
+
+
+/* =====================================================
+   ESTRELLAS
+===================================================== */
+
+const estrellas =
+    document.getElementById("estrellas");
+
+
+for(
+    let i = 0;
+    i < 120;
+    i++
+){
+
+    const estrella =
+        document.createElement("div");
+
+
+    estrella.className =
+        "estrella";
+
+
+    estrella.style.left =
+        Math.random() * 100 + "%";
+
+
+    estrella.style.top =
+        Math.random() * 75 + "%";
+
+
+    estrella.style.animationDelay =
+        Math.random() * 4 + "s";
+
+
+    estrellas.appendChild(
+        estrella
+    );
+
+}
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let cohete = null;
+
+let particulas = [];
+
+let granExplosion = false;
+
+let mostrarFuegos = false;
+
+
+/* =====================================================
+   COLORES
+===================================================== */
+
+const colores = [
+
+    "#ffd700",
+    "#ff4500",
+    "#ff1493",
+    "#00e5ff",
+    "#7cff00",
+    "#ffffff",
+    "#b56cff"
+
+];
+
+
+/* =====================================================
+   CREAR GRAN COHETE
+===================================================== */
+
+function crearGranCohete(){
+
+    cohete = {
+
+        x:
+            ancho / 2,
+
+        y:
+            alto + 50,
+
+        destino:
+            alto * .30,
+
+        velocidad:
+            8,
+
+        color:
+            "#ffd700"
+
+    };
+
+}
+
+
+/* =====================================================
+   DIBUJAR COHETE
+===================================================== */
+
+function dibujarCohete(){
+
+    if(!cohete)
+        return;
+
+
+    cohete.y -=
+        cohete.velocidad;
+
+
+    /* cuerpo del cohete */
+
+    ctx.beginPath();
+
+    ctx.arc(
+        cohete.x,
+        cohete.y,
+        5,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fillStyle =
+        "#ffffff";
+
+    ctx.shadowBlur =
+        25;
+
+    ctx.shadowColor =
+        "#ffd700";
+
+    ctx.fill();
+
+
+    /* cola */
+
+    for(
+        let i = 0;
+        i < 8;
+        i++
+    ){
+
+        ctx.beginPath();
+
+        ctx.arc(
+
+            cohete.x +
+            (Math.random() - .5) * 5,
+
+            cohete.y +
+            10 +
+            Math.random() * 25,
+
+            Math.random() * 3,
+
+            0,
+            Math.PI * 2
+
+        );
+
+        ctx.fillStyle =
+            i % 2 === 0
+            ? "#ffd700"
+            : "#ff6600";
+
+        ctx.fill();
+
+    }
+
+
+    /* llegó al destino */
+
+    if(
+        cohete.y <=
+        cohete.destino
+    ){
+
+        explotarGranCohete();
+
+        cohete = null;
+
+    }
+
+}
+
+
+/* =====================================================
+   GRAN EXPLOSIÓN
+===================================================== */
+
+function explotarGranCohete(){
+
+    granExplosion =
+        true;
+
+
+    const x =
+        ancho / 2;
+
+    const y =
+        alto * .30;
+
+
+    /* MUCHAS PARTÍCULAS */
+
+    for(
+        let i = 0;
+        i < 500;
+        i++
+    ){
+
+        const angulo =
+            Math.random() *
+            Math.PI *
+            2;
+
+
+        const velocidad =
+            2 +
+            Math.random() * 10;
+
+
+        particulas.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+                Math.cos(angulo)
+                * velocidad,
+
+            vy:
+                Math.sin(angulo)
+                * velocidad,
+
+            vida:
+                1,
+
+            decay:
+                .004 +
+                Math.random() * .012,
+
+            color:
+                i % 3 === 0
+                ? "#ffd700"
+                : i % 3 === 1
+                ? "#ffffff"
+                : "#ff6600",
+
+            size:
+                2 +
+                Math.random() * 4
+
+        });
+
+    }
+
+
+    /* mostrar mensaje */
+
+    setTimeout(
+
+        () => {
+
+            document
+                .getElementById("mensaje")
+                .classList
+                .add("mostrarMensaje");
+
+
+            document
+                .getElementById("intro")
+                .classList
+                .add("ocultarIntro");
+
+
+        },
+
+        900
+
+    );
+
+
+    /* activar fuegos secundarios */
+
+    setTimeout(
+
+        () => {
+
+            mostrarFuegos =
+                true;
+
+        },
+
+        3500
+
+    );
+
+}
+
+
+/* =====================================================
+   EXPLOSIÓN NORMAL
+===================================================== */
+
+function explosionNormal(
+    x,
+    y
+){
+
+    const color =
+        colores[
+            Math.floor(
+                Math.random()
+                * colores.length
+            )
+        ];
+
+
+    for(
+        let i = 0;
+        i < 100;
+        i++
+    ){
+
+        const angulo =
+            Math.random()
+            * Math.PI
+            * 2;
+
+
+        const velocidad =
+            1.5 +
+            Math.random() * 6;
+
+
+        particulas.push({
+
+            x:x,
+
+            y:y,
+
+            vx:
+                Math.cos(angulo)
+                * velocidad,
+
+            vy:
+                Math.sin(angulo)
+                * velocidad,
+
+            vida:1,
+
+            decay:
+                .008 +
+                Math.random() * .015,
+
+            color:color,
+
+            size:
+                1 +
+                Math.random() * 3
+
+        });
+
+    }
+
+}
+
+
+/* =====================================================
+   DIBUJAR PARTÍCULAS
+===================================================== */
+
+function dibujarParticulas(){
+
+    for(
+        let i =
+        particulas.length - 1;
+
+        i >= 0;
+
+        i--
+    ){
+
+        const p =
+            particulas[i];
+
+
+        p.x +=
+            p.vx;
+
+
+        p.y +=
+            p.vy;
+
+
+        /* gravedad */
+
+        p.vy +=
+            .045;
+
+
+        p.vx *=
+            .985;
+
+
+        p.vy *=
+            .985;
+
+
+        p.vida -=
+            p.decay;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI * 2
+
+        );
+
+
+        ctx.fillStyle =
+            p.color;
+
+
+        ctx.globalAlpha =
+            Math.max(
+                0,
+                p.vida
+            );
+
+
+        ctx.shadowBlur =
+            15;
+
+
+        ctx.shadowColor =
+            p.color;
+
+
+        ctx.fill();
+
+
+        if(
+            p.vida <= 0
+        ){
+
+            particulas.splice(
+                i,
+                1
+            );
+
+        }
+
+    }
+
+
+    ctx.globalAlpha =
+        1;
+
+}
+
+
+/* =====================================================
+   FUEGOS ARTIFICIALES SECUNDARIOS
+===================================================== */
+
+function fuegoSecundario(){
+
+    if(!mostrarFuegos)
+        return;
+
+
+    const x =
+        ancho *
+        (
+            .10 +
+            Math.random() * .80
+        );
+
+
+    const y =
+        alto *
+        (
+            .12 +
+            Math.random() * .45
+        );
+
+
+    explosionNormal(
+        x,
+        y
+    );
+
+}
+
+
+/* =====================================================
+   ANIMACIÓN PRINCIPAL
+===================================================== */
+
+function animar(){
+
+    ctx.fillStyle =
+        "rgba(2,6,23,.20)";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        ancho,
+        alto
+    );
+
+
+    dibujarCohete();
+
+    dibujarParticulas();
+
+
+    requestAnimationFrame(
+        animar
+    );
+
+}
+
+
+animar();
+
+
+/* =====================================================
+   COMIENZA LA HISTORIA
+===================================================== */
+
+
+/*
+   Esperamos 4 segundos
+   antes de lanzar el gran cohete.
+*/
+
+setTimeout(
+
+    () => {
+
+        crearGranCohete();
+
+    },
+
+    4000
+
+);
+
+
+/* =====================================================
+   FUEGOS DESPUÉS DE LA EXPLOSIÓN
+===================================================== */
+
+setInterval(
+
+    () => {
+
+        if(
+            mostrarFuegos
+        ){
+
+            fuegoSecundario();
+
+        }
+
+    },
+
+    900
+
+);
+
+
+/* =====================================================
+   FUEGOS ESPECIALES
+===================================================== */
+
+setInterval(
+
+    () => {
+
+        if(
+            mostrarFuegos
+        ){
+
+            fuegoSecundario();
+
+            setTimeout(
+
+                () => {
+
+                    fuegoSecundario();
+
+                },
+
+                300
+
+            );
+
+        }
+
+    },
+
+    4500
+
+);
+
+</script>
+
+
+</body>
+
+</html>
